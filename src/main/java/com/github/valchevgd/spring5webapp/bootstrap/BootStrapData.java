@@ -33,29 +33,35 @@ public class BootStrapData implements CommandLineRunner {
         evens.getBooks().add(ddd);
         ddd.getAuthors().add(evens);
 
-        authorRepository.save(evens);
-        bookRepository.save(ddd);
-
-        Author johnson = new Author("Rod", "Johnson");
-        Book noEJB = new Book("J2EE Development without EJB", "123123");
-
-        johnson.getBooks().add(noEJB);
-        noEJB.getAuthors().add(johnson);
-
-        authorRepository.save(johnson);
-        bookRepository.save(noEJB);
-
-        System.out.println("Started in BootStrap");
-        System.out.println("Number of books: " + bookRepository.count());
-
         Publisher publisher = new Publisher("Helikon",
                 "Sofia",
                 "Sofia",
                 "Samboliyski 25",
                 "2900");
-
         publisherRepository.save(publisher);
 
+        publisher.getBooks().add(ddd);
+        ddd.setPublisher(publisher);
+
+        authorRepository.save(evens);
+        bookRepository.save(ddd);
+        publisherRepository.save(publisher);
+        Author johnson = new Author("Rod", "Johnson");
+        Book noEJB = new Book("J2EE Development without EJB", "123123");
+
+        johnson.getBooks().add(noEJB);
+        noEJB.getAuthors().add(johnson);
+        noEJB.setPublisher(publisher);
+        publisher.getBooks().add(noEJB);
+
+        authorRepository.save(johnson);
+        bookRepository.save(noEJB);
+        publisherRepository.save(publisher);
+
+        System.out.println("Started in BootStrap");
+        System.out.println("Number of books: " + bookRepository.count());
+
         System.out.println("Count of publishers: " + publisherRepository.count());
+        System.out.println("Count of publisher's books: " + publisher.getBooks().size());
     }
 }
